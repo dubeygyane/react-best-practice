@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const DashBoard = lazy(() => import("./pages/dashboard/Dashboard.jsx"));
 const FirstComponent = lazy(() =>
   import("./pages/dashboard/FirstComponent.jsx")
@@ -7,12 +7,9 @@ const FirstComponent = lazy(() =>
 const SecondComponent = lazy(() =>
   import("./pages/dashboard/SecondComponent.jsx")
 );
-const Home = lazy(() =>
-  import("./pages/dashboard/Home.jsx")
-);
+const Home = lazy(() => import("./pages/dashboard/Home.jsx"));
 
 const router = createBrowserRouter([
-  
   {
     path: "/dashboard",
     element: (
@@ -22,7 +19,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/dashboard/first",
+        path: "/dashboard",
         element: (
           <Suspense fallback={<div>loading...</div>}>
             <FirstComponent />
@@ -41,10 +38,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Suspense fallback={<div>loading...</div>}>
-    <Home />
-  </Suspense>
-  }
+    element: (
+      <Suspense fallback={<div>loading...</div>}>
+        <Home />
+      </Suspense>
+    ),
+  },
 ]);
 
 function App() {
